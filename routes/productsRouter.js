@@ -40,6 +40,7 @@ router.post('/', (req, res) => {
   });
 });
 
+//patch recibe los objetos de forma parcial
 router.patch('/:id', (req, res) => {
   const { id } = req.params;
   const body = req.body;

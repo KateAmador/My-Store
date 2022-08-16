@@ -5,18 +5,18 @@ const router = express.Router();
 router.get('/', (req, res) => {
   const { limit, offset } = req.query;
   if(limit && offset){
-    res.json({
+    res.status(200).json({
       limit,
       offset
     });
   } else {
-    res.send('No hay parametros');
+    res.status(404).json();
   }
 });
 
 router.post('/', (req, res) => {
   const body = req.body;
-  res.json({
+  res.status(201).json({
     message: 'created',
     data: body
   });

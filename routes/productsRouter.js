@@ -16,17 +16,13 @@ router.get('/filter', (req, res) => {
 });
 
 //... todo lo que es dinamico
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  const product = await service.findOne(id);
-  if (!product) {
-    res.status(404).json({
-      message: `El producto con id ${id} no existe`,
-    });
-  } else {
-    res.status(200).json({
-      product,
-    });
+router.get('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const product = await service.findOne(id);
+    res.json(product);
+  } catch (error) {
+    next(error);
   }
 });
 
@@ -45,7 +41,7 @@ router.patch('/:id', async (req, res) => {
     res.json(product);
   } catch (error) {
     res.status(404).json({
-      message: error.message
+      message: error.message,
     });
   }
 });

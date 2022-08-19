@@ -1,21 +1,19 @@
 const express = require('express');
 
-const productService = require('./../services/productService');
+const ProductsService = require('./../services/productService');
 
 const router = express.Router();
-const service = new productService();
+const service = new ProductsService();
 
 router.get('/', async (req, res) => {
   const products = await service.find();
-  res.status(200).json(products);
+  res.json(products);
 });
 
-//todo lo que es especifico debe ir antes de ...
 router.get('/filter', (req, res) => {
-  res.send('Yo soy un filtro');
+  res.send('Yo soy un filter');
 });
 
-//... todo lo que es dinamico
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -32,18 +30,16 @@ router.post('/', async (req, res) => {
   res.status(201).json(newProduct);
 });
 
-//patch recibe los objetos de forma parcial
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const body = req.body;
     const product = await service.update(id, body);
     res.json(product);
   } catch (error) {
-    res.status(404).json({
-      message: error.message,
-    });
+    next(error);
   }
+
 });
 
 router.delete('/:id', async (req, res) => {

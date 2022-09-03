@@ -1,28 +1,28 @@
-const Joi = require('joi');
+const joi = require('joi');
 
-const id = Joi.number().integer();
-const name = Joi.string().min(3).max(30);
-const lastName = Joi.string();
-const phone =  Joi.string();
-const userId = Joi.number().integer();
-const email = Joi.string().email();
-const password =  Joi.string();
+const id = joi.number().integer();
+const name = joi.string().min(3).max(30);
+const lastName = joi.string();
+const phone =  joi.string();
+const userId = joi.number().integer();
+const email = joi.string().email();
+const password =  joi.string();
 
-const getCustomerSchema = Joi.object({
+const getCustomerSchema = joi.object({
   id: id.required(),
 });
 
-const createCustomerSchema = Joi.object({
+const createCustomerSchema = joi.object({
   name: name.required(),
   lastName: lastName.required(),
   phone: phone.required(),
-  user: Joi.object({
+  user: joi.object({
     email: email.required(),
     password: password.required()
   })
 });
 
-const updateCustomerSchema = Joi.object({
+const updateCustomerSchema = joi.object({
   name,
   lastName,
   phone,
